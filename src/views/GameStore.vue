@@ -8,6 +8,7 @@ import GameList from '@/components/GameList.vue';
 import Pagination from '@/components/Pagination.vue';
 import gameService from '@/services/gamestore.service';
 import wishlistSer from '@/services/wishlist.service';
+import cartService from '@/services/cart.service';
 
 //const $router = useRouter();
 const totalPages = ref(1);
@@ -60,6 +61,16 @@ async function onAddtoWishList(game){
         console.log(error);
     }
 }
+
+async function onAddtoCart(game){
+    try{
+        await cartService.addToCart(game);
+        message.value = 'Successfully Adding Game To Cart'
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 onMounted(() => retrieveGames(1));
 
 watch(searchText, () => (selectedIndex.value = -1));
@@ -107,6 +118,18 @@ watchEffect(() => retrieveGames(currentPage.value));
                 <i class="fas fa-eye"></i>
             </h4>
             <GameInformation :game="selectedGame" />
+            <button 
+                class="btn btn-sm btn-success"
+                @click="onAddtoWishList(game)"
+            >
+            <i class="fas fa-heart"></i> Add to WishList
+            </button>
+            <button
+                class="ml-2 btn btn-sm btn-primary"
+                @click="onAddtoCart(game)"
+            >
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
             </div>
         </div>
     </div>

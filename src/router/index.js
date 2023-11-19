@@ -26,6 +26,13 @@ const routes = [
         name: 'login',
         component: () => import ('@/views/COGLogin.vue'),
     },
+
+    {
+        path: '/users/account',
+        name: 'account',
+        component: () => import ('@/views/COGUser.vue'),
+    },
+
 ];
 
 const router = createRouter({

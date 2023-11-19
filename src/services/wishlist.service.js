@@ -18,12 +18,20 @@ function Wishlist(){
             method: 'POST',
             headers,
             body: JSON.stringify(game),
-        })
+        }).then((res) => res.json());
+    }
+
+    async function removefromWishList(id){
+        return await fetch(`${baseUrl}/${id}`, {
+            method: 'DELETE'
+        }).then((res) => res.json());
     }
 
     return {
         getWishlist,
         getGame,
+        addToWishList,
+        removefromWishList,
     }
 }
 
