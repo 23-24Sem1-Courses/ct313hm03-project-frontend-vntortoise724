@@ -6,7 +6,7 @@ const routes = [
     {
         path: '/',
         name: 'gamestore',
-        component: GameStore,
+        component: GameStore
     },
 
     {
@@ -19,6 +19,12 @@ const routes = [
         path: '/users/register',
         name: 'register',
         component: () => import ('@/views/COGRegister.vue'),
+    },
+
+    {
+        path: '/users/login',
+        name: 'login',
+        component: () => import ('@/views/COGLogin.vue'),
     },
 ];
 

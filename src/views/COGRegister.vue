@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import UserForm from '@/components/UserForm.vue';
+import RegisterForm from '@/components/RegisterForm.vue';
 import userService from '@/services/user.service';
 
 const $router = useRouter();
@@ -23,7 +23,7 @@ async function onAddUser(user){
 <template>
     <div class="page">
         <h4> Register New Account </h4>
-        <UserForm
+        <RegisterForm
             @submit:user="onAddUser"
         />
         <p>{{ message }}</p>

@@ -7,6 +7,7 @@ import InputSearch from '@/components/InputSearch.vue';
 import GameList from '@/components/GameList.vue';
 import Pagination from '@/components/Pagination.vue';
 import gameService from '@/services/gamestore.service';
+import wishlistSer from '@/services/wishlist.service';
 
 //const $router = useRouter();
 const totalPages = ref(1);
@@ -15,6 +16,7 @@ const currentPage = ref(1);
 const games = ref([]);
 const selectedIndex = ref(-1);
 const searchText = ref('');
+const message = ref('');
 
 //
 const searchableGames = computed(() => 
@@ -50,19 +52,26 @@ async function retrieveGames(page) {
     }
 }
 
+async function onAddtoWishList(game){
+    try{
+        await wishlistSer.addToWishList(game);
+        message.value = 'Successfully Adding Game To WishList.';
+    } catch (error) {
+        console.log(error);
+    }
+}
 onMounted(() => retrieveGames(1));
 
 watch(searchText, () => (selectedIndex.value = -1));
 
 watchEffect(() => retrieveGames(currentPage.value));
-
 </script>
 
 <template>
     <div class="page row mb-5">
         <div class="mt-3 col-md-6">
             <h4>
-                COS STORE 
+                COG STORE 
                 <i class="fas fa-gamepad"></i>
             </h4>
             <div class="my-3">

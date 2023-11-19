@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from "vue-router";
 import * as yup from 'yup';
 import { Form, Field, ErrorMessage } from 'vee-validate';
+
+const $router = useRouter();
 
 const props = defineProps({
 	initialAccount: { type: Object, required: true},
@@ -42,6 +45,9 @@ function submitUser() {
 	$emit('submit:user', registerAccount.value);
 }
 
+function goToLoginForm(){
+	$router.push({ name: 'login' });
+}
 </script>
 
 <template>
@@ -112,13 +118,13 @@ function submitUser() {
 		</div>
 
 		<div class="form-group">
-			<button class="btn btn-primary">Đăng Ký</button>
+			<button class="btn btn-primary">Register</button>
 			<button
-				v-if="registerAccount.id"
 				type="button"
-				class="ml-2 btn btn-danger"
+				class="ml-2 btn btn-secondary"
+				@click="goToLoginForm"
 			>
-			Xóa
+			Login
 			</button>
 		</div>
 	</Form>
