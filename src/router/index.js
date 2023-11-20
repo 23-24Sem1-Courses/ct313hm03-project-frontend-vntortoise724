@@ -22,6 +22,13 @@ const routes = [
     },
 
     {
+        path: '/users/:id',
+        name: 'userInfo',
+        component: () => import ('@/views/COGUser.vue'),
+        props: (route) => ({ userId: route.params.id })
+    },
+
+    {
         path: '/users/login',
         name: 'login',
         component: () => import ('@/views/COGLogin.vue'),

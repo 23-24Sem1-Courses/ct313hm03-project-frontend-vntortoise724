@@ -45,7 +45,7 @@ async function retrieveGames(page) {
         const chunk = await gameService.getGameList(page);
         totalPages.value = chunk.metadata.lastPage ?? 1;
         games.value = chunk.games.sort((current, next) =>
-            current.title.localeCompare(next.title)
+            current.name.localeCompare(next.name)
         );
         selectedIndex.value = -1;
     } catch (error) {

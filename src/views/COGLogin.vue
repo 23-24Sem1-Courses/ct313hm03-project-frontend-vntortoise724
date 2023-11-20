@@ -14,7 +14,7 @@ async function onLogin(){
     try {
         user.value = await userService.getUser(user);
         message.value = 'Welcome to COG!';
-        $route.push({ name: 'gamestore' });
+        $route.push({ name: 'userInfo' });
     } catch (error) {
         console.log(error);
         $router.push({
