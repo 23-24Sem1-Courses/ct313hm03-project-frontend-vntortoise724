@@ -1,21 +1,19 @@
 <script setup>
 import UserInfo from '@/components/UserInfo.vue';
 import userService from '@/services/user.service';
-import { ref } from 'vue';
+//import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const props = defineProps({
-    userId: { type: String, required: true},
+    user: { type: String, required: true},
 });
 
 const $router = useRouter();
 const $route = useRoute();
 
-const user = ref(null);
-
 async function getUser(id){
     try {
-        user.value = await userService.getUser(id);
+        await userService.getUser(id);
     } catch (error) {
         console.log(error);
         $router.push({
@@ -27,14 +25,12 @@ async function getUser(id){
     }
 }
 
-getUser(props.userId);
+getUser(props.user);
 </script>
 
 <template>
     <div v-if="user" class="page">
         <h4>User Information</h4>
-        <UserInfo 
-            :intitial-user="user"
-        />
+        <UserInfo :user="getUser" />
     </div>
 </template>

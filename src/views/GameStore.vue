@@ -14,23 +14,24 @@ import cartService from '@/services/cart.service';
 const totalPages = ref(1);
 const currentPage = ref(1);
 
-const games = ref([]);
+const contacts = ref([]);
 const selectedIndex = ref(-1);
 const searchText = ref('');
+
 const message = ref('');
 
 //
 const searchableGames = computed(() => 
-    games.value.map((game) => {
-        const { title, description, price } = game;
-        return [title, description, price].join('');
+    contacts.value.map((game) => {
+        const { title, description } = game;
+        return [ title, description ].join('');
     })
 );
 
 //
 const filteredGames = computed(() => {
-    if (!searchText.value) return games.value;
-    return games.value.filter((game, index) => 
+    if (!searchText.value) return contacts.value;
+    return contacts.value.filter((game, index) =>
         searchableGames.value[index].includes(searchText.value)
     );
 });
@@ -44,8 +45,8 @@ async function retrieveGames(page) {
     try {
         const chunk = await gameService.getGameList(page);
         totalPages.value = chunk.metadata.lastPage ?? 1;
-        games.value = chunk.games.sort((current, next) =>
-            current.name.localeCompare(next.name)
+        contacts.value = chunk.contacts.sort((current, next) =>
+            current.title.localeCompare(next.title)
         );
         selectedIndex.value = -1;
     } catch (error) {
@@ -90,7 +91,7 @@ watchEffect(() => retrieveGames(currentPage.value));
             </div>
             <GameList
                 v-if="filteredGames.length > 0"
-                :games="filteredGames"
+                :contacts="filteredGames"
                 v-model:selectedIndex="selectedIndex"
             />
             <p v-else>

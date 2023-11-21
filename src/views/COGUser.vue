@@ -6,7 +6,8 @@ import { useRouter } from 'vue-router';
 
 const props = defineProps({
     userId: { type: String, required: true},
-})
+    headers: { Authorization: 'Bearer' + localStorage.getItem('token') }
+});
 
 const $router = useRouter();
 const user = ref(null);

@@ -7,12 +7,12 @@ import userService from '@/services/user.service';
 const $router = useRouter();
 const $route = useRoute();
 
-const user = ref(null);
 const message = ref('');
 
-async function onLogin(){
+async function onLogin(user){
     try {
         user.value = await userService.getUser(user);
+        localStorage.setItem('token', user.data.token);
         message.value = 'Welcome to COG!';
         $route.push({ name: 'userInfo' });
     } catch (error) {

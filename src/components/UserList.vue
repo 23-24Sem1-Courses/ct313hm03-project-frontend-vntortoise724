@@ -11,11 +11,11 @@ const $emit = defineEmits(['update:selectedIndex']);
     <ul class="list-group">
         <li 
             class="list-group-item px-3" 
-            v-for="(game, index) in contacts" 
+            v-for="(user, index) in contacts" 
             :class="{ active: index === selectedIndex }"
-            :key="game.id" @click="$emit('update:selectedIndex', index)"
+            :key="user.id" @click="$emit('update:selectedIndex', index)"
         >
-            {{ game.title }}
+            {{ user.username }}
         </li>
     </ul>
 </template>

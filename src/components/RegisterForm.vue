@@ -33,10 +33,6 @@ const userFormSchema = yup.object().shape({
 		.min(4)
 		.max(20)
 		.required("Please Enter the Password"),
-	confirmPassword: yup
-		.string()
-		.required("Please Confirm your Password")
-		.oneOf([yup.ref("password"), null], "Password Unmatch!"),
 });
 
 const registerAccount = ref({ ...props.initialAccount });
@@ -105,16 +101,6 @@ function goToLoginForm(){
 				v-model="registerAccount.password"
 			/>
 			<ErrorMessage name="password" class="error-feedback" />
-		</div>
-
-		<div class="form-group">
-			<label for="confirmPassword">Confirm Password</label>
-			<Field 
-				name="confirmPassword"
-				type="text"
-				class="form-control"
-				v-model="registerAccount.confirmPassword"
-			/>
 		</div>
 
 		<div class="form-group">

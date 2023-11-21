@@ -1,5 +1,5 @@
 function CartService(){
-    const baseUrl = '/api/cart';
+    const baseUrl = '/api/users/cart';
     const headers = {
         'Content-Type': 'application/json',
     }

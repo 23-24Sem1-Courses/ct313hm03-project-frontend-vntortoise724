@@ -16,16 +16,7 @@ defineProps({
         </div>
         <div class="p-1"> 
             <strong>Price</strong>
-            <i
-                v-if="game.isfree"
-            >
-            Free 
-            </i>
-            <i
-                v-else
-            >
             {{ game.price }}
-            </i>
         </div>
     </div>
 </template>

@@ -1,5 +1,5 @@
 function Wishlist(){
-    const baseUrl = '/api/wishlist';
+    const baseUrl = '/api/users/wishlist';
     const headers = {
         'Content-Type': 'application/json',
     }

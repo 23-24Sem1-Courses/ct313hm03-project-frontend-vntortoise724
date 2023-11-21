@@ -16,7 +16,7 @@
             </li>
             <li class="nav-item">
                     <router-link
-                        :to="{ name: 'gamestore' }"
+                        :to="{ name: 'wishlist' }"
                         class = "nav-link"
                     >
                     Wishlist
@@ -25,7 +25,7 @@
             </li>
             <li class="nav-item">
                     <router-link
-                        :to="{ name: 'gamestore' }"
+                        :to="{ name: 'cart' }"
                         class = "nav-link"
                     >
                     Your Cart

@@ -83,8 +83,8 @@ watchEffect(() => retrieveGames(currentPage.value))
     <div class="page row mb-5">
         <div class="mt-3 col-md-6">
             <h4>
-                WishList
-                <i class="fas fa-heart"></i>
+                Cart
+                <i class="fas fa-shopping-cart"></i>
             </h4>
             <div class="my-3">
                 <InputSearch v-model="searchText" />

@@ -12,12 +12,17 @@ function UserService(){
         }).then((res) => res.json());
     }
 
-    async function getUser (user_id){
-        return await fetch(`${baseUrl}/${user_id}`).then((res) => res.json());
+    async function getManyUser(page, limit = 5){
+        let url = `${baseUrl}?page=${page}&limit=${limit}`;
+        return await fetch(url).then((res) => res.json());
     }
 
-    async function updateUser(user_id, user){
-        return await fetch(`${baseUrl}/${user_id}`, {
+    async function getUser (id){
+        return await fetch(`${baseUrl}/${id}`).then((res) => res.json());
+    }
+
+    async function updateUser(id, user){
+        return await fetch(`${baseUrl}/${id}`, {
             method: 'PUT',
             headers,
             body: JSON.stringify(user),
@@ -27,6 +32,7 @@ function UserService(){
     return {
         createUser,
         getUser,
+        getManyUser,
         updateUser,
     };
 }
