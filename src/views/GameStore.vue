@@ -1,7 +1,6 @@
 
 <script setup>
 import { ref, computed, onMounted, watch, watchEffect } from "vue";
-//import { useRouter } from 'vue-router';
 import GameInformation from '@/components/GameInformation.vue';
 import InputSearch from '@/components/InputSearch.vue';
 import GameList from '@/components/GameList.vue';
@@ -10,28 +9,25 @@ import gameService from '@/services/gamestore.service';
 import wishlistSer from '@/services/wishlist.service';
 import cartService from '@/services/cart.service';
 
-//const $router = useRouter();
 const totalPages = ref(1);
 const currentPage = ref(1);
 
-const contacts = ref([]);
+const games = ref([]);
 const selectedIndex = ref(-1);
 const searchText = ref('');
 
 const message = ref('');
 
-//
 const searchableGames = computed(() => 
-    contacts.value.map((game) => {
+    games.value.map((game) => {
         const { title, description } = game;
         return [ title, description ].join('');
     })
 );
 
-//
 const filteredGames = computed(() => {
-    if (!searchText.value) return contacts.value;
-    return contacts.value.filter((game, index) =>
+    if (!searchText.value) return games.value;
+    return games.value.filter((game, index) =>
         searchableGames.value[index].includes(searchText.value)
     );
 });
@@ -45,7 +41,7 @@ async function retrieveGames(page) {
     try {
         const chunk = await gameService.getGameList(page);
         totalPages.value = chunk.metadata.lastPage ?? 1;
-        contacts.value = chunk.contacts.sort((current, next) =>
+        games.value = chunk.games.sort((current, next) =>
             current.title.localeCompare(next.title)
         );
         selectedIndex.value = -1;
@@ -91,7 +87,7 @@ watchEffect(() => retrieveGames(currentPage.value));
             </div>
             <GameList
                 v-if="filteredGames.length > 0"
-                :contacts="filteredGames"
+                :games="filteredGames"
                 v-model:selectedIndex="selectedIndex"
             />
             <p v-else>

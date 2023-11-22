@@ -3,6 +3,14 @@ import UserInfo from '@/components/UserInfo.vue';
 import userService from '@/services/user.service';
 //import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import useAuthStore from '@/store/auth.store';
+import useUsersStore from '@/store/users.store';
+
+const authStore = useAuthStore();
+const { user: authUser } = storeToRefs(authStore);
+
+const usersStore = useUsersStore();
 
 const props = defineProps({
     user: { type: String, required: true},
@@ -26,11 +34,12 @@ async function getUser(id){
 }
 
 getUser(props.user);
+usersStore.getAll();
 </script>
 
 <template>
     <div v-if="user" class="page">
-        <h4>User Information</h4>
+        <h4> {{ authUser?.first_name }} Information </h4>
         <UserInfo :user="getUser" />
     </div>
 </template>

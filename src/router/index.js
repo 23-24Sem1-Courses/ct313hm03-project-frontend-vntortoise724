@@ -1,6 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
 import GameStore from '@/views/GameStore.vue';
-import UserList from '@/views/COGUserlist.vue';
 import Error from '@/views/NotFound.vue';
 
 const routes = [
@@ -8,12 +7,6 @@ const routes = [
         path: '/games',
         name: 'gamestore',
         component: GameStore
-    },
-
-    {
-        path: '/users',
-        name: 'userlist',
-        component:UserList,
     },
 
     {
