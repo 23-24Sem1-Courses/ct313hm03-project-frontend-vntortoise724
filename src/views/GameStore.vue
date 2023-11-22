@@ -2,17 +2,27 @@
 <script setup>
 import { ref, computed, onMounted, watch, watchEffect } from "vue";
 import GameInformation from '@/components/GameInformation.vue';
+import AppHeader from "@/components/AppHeader.vue";
 import InputSearch from '@/components/InputSearch.vue';
 import GameList from '@/components/GameList.vue';
 import Pagination from '@/components/Pagination.vue';
 import gameService from '@/services/gamestore.service';
+import gameuserService from '@/services/gameuser.service';
 import wishlistSer from '@/services/wishlist.service';
 import cartService from '@/services/cart.service';
+import { useRouter } from "vue-router";
+
+const props = defineProps({
+    userId: { type: String, required: true},
+});
+
+const $router = useRouter();
 
 const totalPages = ref(1);
 const currentPage = ref(1);
 
 const games = ref([]);
+const user = ref(null);
 const selectedIndex = ref(-1);
 const searchText = ref('');
 
@@ -20,8 +30,8 @@ const message = ref('');
 
 const searchableGames = computed(() => 
     games.value.map((game) => {
-        const { title, description } = game;
-        return [ title, description ].join('');
+        const { title, description, price } = game;
+        return [ title, description, price ].join('');
     })
 );
 
@@ -50,9 +60,23 @@ async function retrieveGames(page) {
     }
 }
 
-async function onAddtoWishList(game){
+async function getUser(id) {
+    try {
+        user.value = await gameuserService.getUser(id);
+    } catch (error) {
+        console.log(error);
+        $router.push({
+            name: 'notfound',
+            params: { pathMatch: $router.path.split('/').slice(1) },
+            query: $router.query,
+            hash: $router.hash,
+        });
+    }
+}
+
+async function onAddtoWishList(game_id, user_id){
     try{
-        await wishlistSer.addToWishList(game);
+        await wishlistSer.addToWishList(game_id, user_id);
         message.value = 'Successfully Adding Game To WishList.';
     } catch (error) {
         console.log(error);
@@ -73,9 +97,21 @@ onMounted(() => retrieveGames(1));
 watch(searchText, () => (selectedIndex.value = -1));
 
 watchEffect(() => retrieveGames(currentPage.value));
+
+getUser(props.userId);
+
+function goToAccount() {
+    $router.push({
+        name: 'userInfo',
+        params: { id: user.value.id },
+    });
+}
+
 </script>
 
 <template>
+    <AppHeader />
+
     <div class="page row mb-5">
         <div class="mt-3 col-md-6">
             <h4>
@@ -106,26 +142,37 @@ watchEffect(() => retrieveGames(currentPage.value));
                 >
                 <i class="fas fa-redo"></i> Refresh Page
                 </button>
+                <button
+                    class="ml-2 btn-sm btn-secondary"
+                    @click="goToAccount"
+                >
+                Go To Your Account
+                </button>
             </div>
         </div>
         <div class="mt-3 col-md-6">
             <div v-if="selectedGame">
-            <h4>
-                Game Detail
-                <i class="fas fa-eye"></i>
-            </h4>
-            <GameInformation :game="selectedGame" />
-            <button 
-                class="btn btn-sm btn-success"
-                @click="onAddtoWishList(game)"
-            >
-            <i class="fas fa-heart"></i> Add to WishList
-            </button>
-            <button
-                class="ml-2 btn btn-sm btn-primary"
-                @click="onAddtoCart(game)"
-            >
-            <i class="fas fa-shopping-cart"></i> Add to Cart
+                <h4>
+                    Game Detail
+                    <i class="fas fa-eye"></i>
+                </h4>
+                <GameInformation :game="selectedGame" />  
+                <hr />
+                <button 
+                    v-if="user"
+                    :game="selectedGame.id"
+                    :id="user.id"
+                    class="btn btn-sm btn-success"
+                    @click="onAddtoWishList(game, id)"
+                >
+                <i class="fas fa-heart"></i> Add to WishList
+                </button>
+                <button
+                    v-if="user"
+                    class="ml-2 btn btn-sm btn-primary"
+                    @click="onAddtoCart(game)"
+                >
+                <i class="fas fa-shopping-cart"></i> Add to Cart
             </button>
             </div>
         </div>

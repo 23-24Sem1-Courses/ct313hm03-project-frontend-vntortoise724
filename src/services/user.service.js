@@ -17,7 +17,7 @@ function UserService(){
         return await fetch(url).then((res) => res.json());
     }
 
-    async function getUser (id){
+    async function getUser(id){
         return await fetch(`${baseUrl}/${id}`).then((res) => res.json());
     }
 
@@ -29,11 +29,18 @@ function UserService(){
         }).then((res) => res.json());
     }
 
+    async function deleteUser(id){
+        return await fetch(`${baseUrl}/${id}`, {
+            method: 'DELETE'
+        }).then((res) => res.json());
+    }
+
     return {
         createUser,
         getUser,
         getManyUser,
         updateUser,
+        deleteUser,
     };
 }
 

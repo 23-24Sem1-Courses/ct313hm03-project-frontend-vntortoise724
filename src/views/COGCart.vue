@@ -2,6 +2,7 @@
 import { useRouter } from "vue-router";
 import { ref, computed, onMounted, watch, watchEffect } from 'vue';
 import cartService from "@/services/cart.service";
+import AppHeader from "@/components/AppHeader.vue";
 import GameList from "@/components/GameList.vue";
 import InputSearch from "@/components/InputSearch.vue";
 import Pagination from "@/components/Pagination.vue";
@@ -80,6 +81,7 @@ watchEffect(() => retrieveGames(currentPage.value))
 </script>
 
 <template>
+    <AppHeader />
     <div class="page row mb-5">
         <div class="mt-3 col-md-6">
             <h4>

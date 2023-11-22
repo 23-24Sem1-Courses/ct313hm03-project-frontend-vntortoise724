@@ -37,7 +37,7 @@
                 :to="{ name: 'register' }"
                 class = "nav-link"
             >
-                Register
+                Log Out
                 <i class="fas fa-user"></i>
             </router-link>
             </li>

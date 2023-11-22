@@ -13,11 +13,11 @@ function Wishlist(){
         return await fetch(`${baseUrl}/${id}`).then((res) => res.json());
     }
 
-    async function addToWishList(game){
+    async function addToWishList(game_id, user_id){
         return await fetch(`${baseUrl}`, {
             method: 'POST',
             headers,
-            body: JSON.stringify(game),
+            body: JSON.stringify(game_id).stringify(user_id),
         }).then((res) => res.json());
     }
 
