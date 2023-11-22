@@ -2,7 +2,6 @@
 import { useRouter } from 'vue-router';
 import * as yup from 'yup';
 import { Form, Field, ErrorMessage } from 'vee-validate';
-import { useAuthStore } from '@/store'; 
 
 const $router = useRouter();
 
@@ -15,14 +14,6 @@ const LoginSchema = yup.object().shape({
         .required("Please Enter your Password"),
 });
 
-function submitUser(values, { setErrors }) {
-    const authStore = useAuthStore();
-    const { username, password } = values;
-    
-    return authStore.login(username, password)
-        .catch(error => setErrors({ apiError: error}));
-}
-
 function goToRegister(){
     $router.push({ name: 'register' })
 }
@@ -31,7 +22,7 @@ function goToRegister(){
 
 <template>
     <Form
-        @submit="submitUser"
+        @submit="submitLogin"
         :validation-schema="LoginSchema"
     >
         <div class="form-group">
